@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" src="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" src="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>--><!--必须放在jquery.min.js的引用后面-->
+    <script type="text/javascript" src="easyui/jquery.tree.js"></script>
+    <script type="text/javascript" src="easyui/jquery.parser.js"></script>
+</head>
+<body>
+    <ul class="easyui-tree" checkbox="true">
+        <li><span>菜单0</span></li>
+    </ul>
+    <ul class="easyui-tree" data-options="checkbox:true">
+        <li><span>菜单0</span></li>
+    </ul>
+    <ul id="tree" ><!--class="easyui-tree"-->
+        <li><span>菜单1</span></li>
+        <li>
+            <span>菜单2</span>
+            <ul>
+                <li><span>菜单2-1</span></li>
+                <li><span>菜单2-2</span></li>
+            </ul>
+        </li>
+    </ul>
+    <script type="text/javascript">
+        $(function(){
+            $("#tree").tree({
+                checkbox:true
+            });
+        });
+    </script>
+</body>
+</html>

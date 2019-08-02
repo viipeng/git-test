@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/icon.css" />
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+    <div style="width:300px; height:300px; border:1px solid #ccc" >
+        <div id="drag04" style="width: 100px;height: 200px;background-color: #cccccc"></div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#drag04").draggable({
+                onDrag: function (e) {
+                    var d = e.data;
+                    if(d.left < d.parent.offsetLeft){ //如果拖动到最左边
+                        d.left = d.parent.offsetLeft;
+                    }
+                    if(d.top < d.parent.offsetTop){ //如果拖动到最上边
+                        d.top = d.parent.offsetTop;
+                    }
+                    if(d.left+$(d.target).outerWidth()>$(d.parent).outerWidth()+d.parent.offsetLeft){
+                        d.left=$(d.parent).outerWidth() - $(d.target).outerWidth()+d.parent.offsetLeft;
+                    }
+                    if(d.top+$(d.target).outerHeight()>$(d.parent).outerHeight()+d.parent.offsetTop){
+                        d.top=$(d.parent).outerHeight() - $(d.target).outerHeight()+d.parent.offsetTop;
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

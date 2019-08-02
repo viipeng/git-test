@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../../easyui/themes/icon.css" />
+    <script type="text/javascript" src="../../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+    <table id="dg" style="width: 700px; height: 400px">
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            $("#dg").datagrid({
+                title: "图书列表",
+                url: "/book_list.json",
+                method: "post",
+                pagination: true,
+                pageSize: 5,
+                singleSelect: true,
+                pageList: [5, 10, 15, 20],
+                columns: [[
+                    {field: 'id', title: 'ID', width: 50, align: 'center'},
+                    {field: 'name', title: '书名', width: 250, editor: 'textbox'},
+                    {field: 'publishDate', title: '出版日期', width: '100', editor:{
+                        type: 'dat3box', options:{
+                            formatter: function (date) {
+                                return date.getFullYear() + "-" + (date.getMonth() + 1) + "_" + date.getData();
+                            }
+                            parser: function (s) {
+                                if(!s) return new Date();
+                                var ss = (s.split("-"));
+                                var y = parseInt(ss[0], 10);
+                                var m = parseInt(ss[1], 10);
+                                var d = parseInt(ss[2], 10);
+                                if(!isNaN(y) && !isNaN(m) && !isNaN(d)){
+                                    return new Date(y, m-1, d);
+                                }else{
+                                    return new Date();
+                                }
+
+                            }
+                        }
+                    }},
+                    {
+                        field: 'price', title: '价格', width: 100, editor: {
+                            type: 'numberbox', options: {precision: 2, required: true}
+                        }
+                    },
+                    {
+                        field: 'category', title: '分类', width: 100, formatter: function (value, row, index) {
+                            return row.category.name;
+                        }, editor:{
+                            type: "conbobox",
+                            options:{
+                                url: "/category.json",
+                                method: "post",
+                                valueField: "id",
+                                textField: "name",
+                                required: true
+                            }
+                        }
+                    }
+                ]],
+                onClickRow:function(index){
+                    if(editIndex != index){
+                        $("#dg").datagrid("rejectChange")
+                    }
+                    editIndex=index;
+                    $("#dg").datagrid("beginEdit", index)
+                    $("#dg").datagrid("selectRow", index)
+                }
+            });
+        })
+        var editIndex;
+    </script>
+</body>
+</html>
